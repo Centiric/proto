@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package centiric.core.v1;
+
+option go_package = "github.com/Centiric/core/gen/go/core/v1;corev1";
+
+service CoreService {
+  // Bir arama isteğini yönlendirmek için çağrılır.
+  rpc RouteCall(RouteCallRequest) returns (RouteCallResponse);
+
+  // Bir aramanın sonlandırıldığını bildirmek için çağrılır.
+  rpc TerminateCall(TerminateCallRequest) returns (TerminateCallResponse);
+}
+
+message RouteCallRequest {
+  string from_uri = 1;
+  string to_uri = 2;
+  string call_id = 3;
+}
+
+message RouteCallResponse {
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    STATUS_OK = 1;
+    STATUS_FAILED = 2;
+  }
+  Status status = 1;
+  string session_id = 2;
+  uint32 rtp_port = 3;
+}
+
+message TerminateCallRequest {
+  string call_id = 1;
+}
+
+message TerminateCallResponse {
+  bool success = 1;
+}
