@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package centiric.media.v1;
+
+option go_package = "github.com/Centiric/core/gen/go/media/v1;mediav1";
+
+service MediaService {
+  // Boş bir RTP portu atamak için çağrılır.
+  rpc AllocatePort(AllocatePortRequest) returns (AllocatePortResponse);
+
+  // Kullanılan bir RTP portunu serbest bırakmak için çağrılır.
+  rpc ReleasePort(ReleasePortRequest) returns (ReleasePortResponse);
+}
+
+message AllocatePortRequest {
+  string session_id = 1; // Hangi oturum için port istendiği
+}
+
+message AllocatePortResponse {
+  uint32 port = 1;
+}
+
+message ReleasePortRequest {
+  uint32 port = 1;
+}
+
+message ReleasePortResponse {
+  bool success = 1;
+}
